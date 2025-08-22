@@ -11,7 +11,7 @@ const Sidebar = (props) => {
 
   return (
     <div
-      className={`   flex flex-col items-start relative  ${
+      className={`   flex flex-col items-start relative dark:bg-gray-900 dark:text-gray-400  ${
         props.togle ? "w-[60px]" : "w-[310px]"
       }`}
     >

@@ -42,10 +42,10 @@ const InputField = (props) => {
   }
 
   return (
-    <div className="" onFocus={handleClickInside}>
+    <div className=" dark:bg-gray-900 dark:text-gray-100" onFocus={handleClickInside}>
       <div
         ref={containerRef}
-        className="mt-5 w-[590px] shadow-[0_0_10px_rgba(0,0,0,0.3)] p-5 rounded-xl"
+        className="mt-5 w-[590px] dark:bg-gray-600 dark:text-gray-100 shadow-[0_0_10px_rgba(0,0,0,0.3)] p-5 rounded-xl"
       >
         <input
           type="text"

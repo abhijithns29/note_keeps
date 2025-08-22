@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
-import TogleMenu from "./togleMenu";
+import TogleMenu from "./TogleMenu";
 import InputField from "./InputField";
 
-import EditNoteComponent from "./editNoteComponent";
+import EditNoteComponent from "./EditNoteComponent";
 
 const Notes = (props) => {
   const [editMode, setEditMode] = useState(false);
@@ -33,8 +33,9 @@ const Notes = (props) => {
         ref={containerREF}
         className={
           editMode
-            ? "fixed top-10 left-1/2 -translate-x-1/2  w-[600px] h-[300px] bg-white shadow-2xl z-50 rounded-xl transition-all duration-300"
-            : "p-4 m-3 outline outline-1 rounded-xl max-w-[238px] min-w-[140px]  break-words whitespace-normal h-fit pb-11 group relative bg-white"
+         
+            ? "  dark:bg-gray-900 dark:text-gray-100 fixed top-10 left-1/2 -translate-x-1/2  w-[600px] h-[300px] bg-white shadow-2xl z-50 rounded-xl transition-all duration-300"
+            : "  dark:bg-gray-900 dark:text-gray-100 p-4 m-3 outline outline-1 rounded-xl max-w-[238px] min-w-[140px]  break-words whitespace-normal h-fit pb-11 group relative bg-white"
         }
         onDoubleClick={toggleEditMode}
       >

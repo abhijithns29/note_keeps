@@ -4,8 +4,9 @@ import React ,{ useEffect, useState ,memo}from "react";
 import Navbar from "./components/Navbar";
 import Notecontainer from "./components/Notecontainer";
 import Sidebar from "./components/Sidebar";
-import TogleMenu from "./components/togleMenu";
+import TogleMenu from "./components/TogleMenu";
 import Filetry from "./components/filetry";
+import ThemeButton from "./components/ThemeButton";
 
 function App() {
   const [togleside, settogleside] = useState(false);
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <div className="h-full ">
+     
       
       <Navbar sidebarfn={activatesidebar} />
       <div className="flex h-full ">

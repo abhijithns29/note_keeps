@@ -144,7 +144,7 @@ const Notecontainer = (props) => {
   }
 
   return (
-    <div className="w-full flex flex-col items-center relative">
+    <div className=" dark:bg-gray-900 dark:text-gray-100 w-full flex flex-col items-center relative">
       <InputField savenotes={savenote} editMode={editMode} />
       <div className="max-w-full flex flex-wrap w-full mt-6 relative">
         <>
