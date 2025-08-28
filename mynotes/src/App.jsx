@@ -1,39 +1,28 @@
 import "./index.css";
 import "./App.css";
-import React ,{ useEffect, useState ,memo}from "react";
-import Navbar from "./components/Navbar";
-import Notecontainer from "./components/Notecontainer";
-import Sidebar from "./components/Sidebar";
-import TogleMenu from "./components/TogleMenu";
-import Filetry from "./components/filetry";
-import ThemeButton from "./components/ThemeButton";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import Login from "./components/Login";
+import { useState } from "react";   
+import { UserContext } from "./components/UserContext";
+
+
+ 
+
 
 function App() {
-  const [togleside, settogleside] = useState(false);
-   const [currentlist, setcurrentlist] = useState("pending");
+  const [islogedin ,setLogedin]=useState(false)
+  const [UserInfo,SetUserInfo]=useState()
   
-
-   function setcurrentlistfn(value){
-    setcurrentlist(value)
-   }
-
-  function activatesidebar() {
-    settogleside((prev) => !prev);
-  }
-
   return (
-    <div className="h-full ">
-     
-      
-      <Navbar sidebarfn={activatesidebar} />
-      <div className="flex h-full ">
-        <Sidebar togle={togleside} setcurrentlistfn={setcurrentlistfn} currentlist={currentlist} />
-          
-        <Notecontainer currentlist={currentlist} />
-        
-      </div>
-   
-    </div>
+    <UserContext.Provider value={{ UserInfo, SetUserInfo,setLogedin }}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login setLogedin={setLogedin} />} />
+        <Route path="/home" element={islogedin ?<Home islogedin={islogedin}/> :<Login setLogedin={setLogedin} />} />
+      </Routes>
+    </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 

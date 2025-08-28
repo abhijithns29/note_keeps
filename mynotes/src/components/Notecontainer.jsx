@@ -3,25 +3,30 @@ import InputField from "./InputField";
 import Notes from "./Notes";
 import ClearAllButton from "./ClearAllButton";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { useContext } from "react";
+import { UserContext } from "./UserContext";
 
 const Notecontainer = (props) => {
   const [notes, setnotes] = useState([]);
   const [FinishNotes, setFinishNotes] = useState([]);
+ 
   const [DeleNotes, setDeleNotes] = useState([]);
+  const { UserInfo ,SetUserInfo,setLogedin} = useContext(UserContext);
   const [mainNote, SetmainNote] = useState({
+    id : UserInfo.user.username,
     pending: [],
     finished: [],
     deleted: [],
   });
   const [isLoaded, setIsLoaded] = useState(false);
   const [editMode, setEditMode] = useState(false);
-
  
+
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await fetch("http://localhost:3000/notesData");
+        const res = await fetch(`http://localhost:3000/notesData/${UserInfo.user.username}`);
         const data = await res.json();
 
         setnotes(data.pending || []);
@@ -40,17 +45,20 @@ const Notecontainer = (props) => {
     if (!isLoaded) return;
 
     const updatedMainNote = {
+      id :UserInfo.user.username,
       pending: notes,
       finished: FinishNotes,
       deleted: DeleNotes,
     };
 
     SetmainNote(updatedMainNote);
+    
 
     const postNote = async () => {
       try {
-        const res = await fetch("http://localhost:3000/notesData", {
-          method: "PUT",
+        createNewUser(UserInfo.user.username)
+        const res = await fetch(`http://localhost:3000/notesData/${UserInfo.user.username}`, {
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
@@ -142,6 +150,43 @@ const Notecontainer = (props) => {
       setFinishNotes(FinishNotes.filter((val, index) => index !== id));
     }
   }
+
+
+async function createNewUser(username) {
+  try {
+    // 🔍 First, check if username already exists
+    const checkRes = await fetch(`http://localhost:3000/notesData/${username}`);
+    const existing = await checkRes.json();
+    
+    if (existing.id===username) {
+       
+      console.log(`⚠️ User "${username}" already exists:`, existing[0]);
+      return existing[0]; // ✅ Return existing user
+    }
+alert("heyyyyy")
+    // 🆕 If not exists, create user
+    const res = await fetch("http://localhost:3000/notesData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: username,   // our chosen id
+        pending: [],
+        finished: [],
+        deleted: []
+      })
+    });
+
+    if (!res.ok) throw new Error("Failed to create user");
+
+    const data = await res.json();
+    console.log("✅ New user added:", data);
+    return data;
+
+  } catch (err) {
+    console.error("❌ Error creating user:", err);
+  }
+}
+
 
   return (
     <div className=" dark:bg-gray-900 dark:text-gray-100 w-full flex flex-col items-center relative">

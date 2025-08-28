@@ -1,6 +1,7 @@
 import React,{memo} from "react";
 import { AlignJustify, FileUp, Search } from "lucide-react";
 import ThemeButton from "./ThemeButton";
+import UserInfo from "./UserInfo";
 
 function Navbar(props) {
   return (
@@ -30,6 +31,7 @@ function Navbar(props) {
       </div>
       <div className=" w-full flex justify-end ">
         <ThemeButton />
+        <UserInfo />
       </div>
     
     </div>
